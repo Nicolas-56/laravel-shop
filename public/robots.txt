@@ -1,0 +1,4 @@
+User-agent: *
+
+Sitemap: https://raycut.ru/sitemap.xml
+Host: raycut.ru
