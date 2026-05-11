@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
     'short_description',
     'description',
     'price',
+    'stock',
     'is_active',
     'sort',
     'meta_title',
@@ -29,8 +30,19 @@ class Product extends Model
     {
         return [
             'price' => 'decimal:2',
+            'stock' => 'integer',
             'is_active' => 'boolean',
         ];
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeInStock($query)
+    {
+        return $query->where('stock', '>', 0);
     }
 
     public function category(): BelongsTo

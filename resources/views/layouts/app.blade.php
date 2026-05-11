@@ -174,6 +174,12 @@
                         <a href="{{ route('register') }}">Зарегистрироваться</a>
                     </p>
                 @endif
+
+                @if (\Illuminate\Support\Facades\Route::has('password.request'))
+                    <p class="modal__footer">
+                        <a href="{{ route('password.request') }}">Забыли пароль?</a>
+                    </p>
+                @endif
             </div>
         </div>
         @endif

@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Models\Lead;
 
-class CreateLead
+class LeadService
 {
-    public function handle(array $payload): Lead
+    public function create(array $payload): Lead
     {
         $payload['status'] = 'new';
 

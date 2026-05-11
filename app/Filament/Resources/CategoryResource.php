@@ -9,8 +9,8 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -152,6 +152,19 @@ class CategoryResource extends Resource
                     ->label('Обновлена')
                     ->dateTime(),
             ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('is_active')
+                    ->label('Активность')
+                    ->options([
+                        '1' => 'Активные',
+                        '0' => 'Неактивные',
+                    ]),
+                Tables\Filters\SelectFilter::make('parent_id')
+                    ->label('Родитель')
+                    ->relationship('parent', 'name')
+                    ->searchable()
+                    ->preload(),
+            ])
             ->recordActions([
                 EditAction::make(),
             ])
@@ -193,6 +206,6 @@ class CategoryResource extends Resource
         $parent = Category::query()->find($parentId);
         $prefix = $parent?->full_slug;
 
-        return 'Предпросмотр URL: /catalog/' . trim(implode('/', array_filter([$prefix, $slug])), '/');
+        return 'Предпросмотр URL: /catalog/'.trim(implode('/', array_filter([$prefix, $slug])), '/');
     }
 }

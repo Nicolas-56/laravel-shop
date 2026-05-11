@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        $this->call(OrderStatusSeeder::class);
+
         $services = [
             [
                 'title' => 'Лазерная резка черновой стали',

@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'fake_payment' => [
+        'secret' => env('FAKE_PAYMENT_SECRET', 'fake-payment-secret'),
+    ],
+
+    'yookassa' => [
+        'shop_id' => env('YOOKASSA_SHOP_ID'),
+        'secret_key' => env('YOOKASSA_SECRET_KEY'),
+        'webhook_secret' => env('YOOKASSA_WEBHOOK_SECRET'),
+    ],
+
 ];

@@ -13,8 +13,8 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -83,6 +83,13 @@ class ProductResource extends Resource
                                         ->label('Цена')
                                         ->numeric()
                                         ->suffix('руб.'),
+                                    TextInput::make('stock')
+                                        ->label('Остаток')
+                                        ->numeric()
+                                        ->integer()
+                                        ->minValue(0)
+                                        ->default(0)
+                                        ->required(),
                                     TextInput::make('sort')
                                         ->label('Сортировка')
                                         ->numeric()
@@ -239,6 +246,9 @@ class ProductResource extends Resource
                     ->numeric(decimalPlaces: 2)
                     ->suffix(' руб.')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('stock')
+                    ->label('Остаток')
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Активен')
                     ->boolean(),
@@ -251,6 +261,19 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Обновлён')
                     ->dateTime(),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('is_active')
+                    ->label('Активность')
+                    ->options([
+                        '1' => 'Активные',
+                        '0' => 'Неактивные',
+                    ]),
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Категория')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->recordActions([
                 EditAction::make(),

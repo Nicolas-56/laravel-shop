@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLeadRequest;
-use App\Services\CreateLead;
+use App\Services\LeadService;
 use Illuminate\Http\RedirectResponse;
 
 class LeadController extends Controller
 {
-    public function store(StoreLeadRequest $request, CreateLead $createLead): RedirectResponse
+    public function store(StoreLeadRequest $request, LeadService $leads): RedirectResponse
     {
-        $createLead->handle($request->validated());
+        $leads->create($request->validated());
 
         return redirect()
             ->route('home')
